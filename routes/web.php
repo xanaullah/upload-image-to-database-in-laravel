@@ -17,4 +17,5 @@ use App\Http\Controllers\UserController;
 Route::resource('crud', UserController::class);
 route::post('/user' ,[UserController::class  , 'store'])->name('user');
 Route::get('/delete/{id}' , [UserController::class  , 'destroy'])->name('delete');
-route::get('/edit/{id}' , [userController::class , 'edit'])->name('edit');
+route::get('/edit/{id}' , [userController::class , 'update'])->name('edit');
+route::post('edit/{id}' , [UserController::class , 'edit'])->name('update');

@@ -91,9 +91,37 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Request $request , $id)
     {
-        //
+        // dd($request->all(),$id);
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required|unique:users,email,'.$id,
+            'father_name'=>'required',
+            'phone'=>'required|unique:users,phone,'.$id,
+             'gender'=>'required',
+        ]);
+        $users=User::find($id);
+        if($request->has('image')){
+            $image=$request->file('image');
+            $extension=$image->getClientOriginalExtension();
+            $filename= uniqid() .'.'. $extension;
+            $image->move('public/images',$filename);
+            $users['image'] = $filename;
+        }
+
+        
+        
+       
+        // dd($users);
+        $users['name']= $request->name;
+        $users['email'] = $request->email;
+        $users['father_name']= $request->father_name;
+        $users['gender']= $request->gender;
+        $users['phone']=$request->phone;
+        $users->save();
+
+return redirect('crud');
     }
 
     /**
@@ -103,9 +131,11 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update($id)
+
     {
-        //
+        $data=user::find($id);
+        return view('update' , ['data'=>$data]);
     }
 
     /**
@@ -114,8 +144,11 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        //
+        $data=User::find($id);
+        $data->delete();
+        return back();
+
     }
 }

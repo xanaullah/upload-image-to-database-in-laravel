@@ -13,21 +13,24 @@
                     <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                         <div class="card-body p-4 p-md-5">
                             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
-                            <form  action="{{ route('user')}}" method="post" enctype="multipart/form-data">
+                            <form  action="{{ route('update' , ['id'=>$data['id']]) }}" method="post" enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="row">
                                     <div class="col-md-6 mb-4">
 
                                         <div class="form-outline">
-                                            <input type="text" id="firstName" class="form-control form-control-lg" name="name" />
+                                        <input type="hidden" id="firstName" class="form-control form-control-lg" name="id"  name="id"
+                                        value="{{$data['id']}}"/>
+
+                                            <input type="text" id="firstName" class="form-control form-control-lg" name="name" value="{{$data['name']}}"/>
                                             <label class="form-label" for="firstName"> Name</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-4">
 
                                         <div class="form-outline">
-                                            <input type="text" id="lastName" class="form-control form-control-lg" name="father_name" />
+                                            <input type="text" id="lastName" class="form-control form-control-lg" name="father_name" value="{{$data['father_name']}}"/>
                                             <label class="form-label" for="lastName">Father Name</label>
                                         </div>
 
@@ -37,7 +40,7 @@
                                     <div class="col-md-6 mb-4 pb-2">
 
                                         <div class="form-outline">
-                                            <input type="email" id="emailAddress" class="form-control form-control-lg" name="email" />
+                                            <input type="email" id="emailAddress" class="form-control form-control-lg" name="email" value="{{$data['email']}}" />
                                             <label class="form-label" for="emailAddress">Email</label>
                                         </div>
 
@@ -45,7 +48,7 @@
                                     <div class="col-md-6 mb-4 pb-2">
 
                                         <div class="form-outline">
-                                            <input type="tel" id="phoneNumber" class="form-control form-control-lg" name="phone" />
+                                            <input type="tel" id="phoneNumber" class="form-control form-control-lg" name="phone" value="{{$data['phone']}}" />
                                             <label class="form-label" for="phoneNumber">Phone Number</label>
                                         </div>
 
@@ -56,7 +59,7 @@
                                     <h6 class="mb-2 pb-1">Gender: </h6>
 
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="gender" id="femaleGender" value="option1" checked />
+                                        <input class="form-check-input" type="radio" name="gender" id="femaleGender" value="{{$data['gender']}}" checked />
                                         <label class="form-check-label" for="femaleGender">Female</label>
                                     </div>
 
@@ -76,7 +79,7 @@
                             <div class="col-md-6 mb-4 d-flex align-items-center">
 
                                 <div class="form-outline datepicker w-100">
-                                    <input type="file" class="form-control form-control-lg" id="birthdayDate" name="image" />
+                                    <input type="file" class="form-control form-control-lg" id="birthdayDate" name="image" value="{{$data['image']}}" />
                                     <label for="birthdayDate" class="form-label">Image</label>
                                 </div>
 
@@ -97,31 +100,7 @@
                     </div>
                 </div>
     </section>
-   <div class="container">
-       <div class="row">
-           <table border="2px">
-               <tr>
-           <th>Name</th>
-           <th>Father Name</th>
-           <th>Email</th>
-           <th>Phone</th>
-           <th>Image</th>
-               </tr>
-               @foreach($users as $user)
-             <tr>
-                 <td>{{$user->name}}</td>
-                 <td>{{$user->father_name}}</td>
-                 <td>{{$user->email}}</td>
-                 <td>{{$user->phone}}</td>
-                 <td><img src="public/images/{{$user->image}}" style="height:100px"></td>
-                 <td><a href="{{url('delete/'.$user->id)}}">Delete</a></td>
-                 <td><a href="{{url('edit/'.$user->id)}}">Edit</a></td>
-
-             </tr> 
-           
-@endforeach
-
-           </table>
+    
        </div>
    </div>
 </body>
